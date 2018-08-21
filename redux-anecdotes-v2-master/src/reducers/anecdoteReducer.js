@@ -34,4 +34,23 @@ const reducer = (store = initialState, action) => {
 	return store
 }
 
+
+export const voting = (id) => {
+    console.log('voting action creator called')
+    return {
+        type: 'VOTE',
+        id: id
+    }
+}
+
+export const anecdoteCreation = (content) => {
+    console.log('anecdoteCreation action creator called')
+    {
+        return {
+            type: 'CREATE',
+            content: content
+        }
+    }
+}
+
 export default reducer
