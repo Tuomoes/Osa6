@@ -5,10 +5,10 @@ import store from './store'
 
 
 const render = () => {
-  ReactDOM.render(
-    <App store={store} />,
-    document.getElementById('root')
-  )
+	ReactDOM.render(
+		<App store={store} />,
+		document.getElementById('root')
+	)
 }
 
 render()
