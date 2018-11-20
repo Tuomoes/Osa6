@@ -17,18 +17,26 @@ const asObject = (anecdote) => {
 	}
 }
 
-const initialState = anecdotesAtStart.map(asObject)
+const initialNotification = 'initial notification. niti-nati-noti.'
+const initialState = { anecdotes: anecdotesAtStart.map(asObject), notification: initialNotification }
+
 
 const reducer = (store = initialState, action) => {
 	if (action.type==='VOTE') {
-		const old = store.filter(a => a.id !==action.id)
-		const voted = store.find(a => a.id === action.id)
+		const old = store.anecdotes.filter(a => a.id !==action.id)
+		const voted = store.anecdotes.find(a => a.id === action.id)
 
-		return [...old, { ...voted, votes: voted.votes+1} ]
+		return {
+            anecdotes: [...old, { ...voted, votes: voted.votes+1} ], 
+            notification: store.notification
+        }
 	}
 	if (action.type === 'CREATE') {
 
-		return [...store, { content: action.content, id: getId(), votes:0 }]
+        return {
+            anecdotes: [...store.anecdotes, { content: action.content, id: getId(), votes:0 }],
+            notification: store.notification
+        }
 	}
 
 	return store
@@ -52,5 +60,12 @@ export const anecdoteCreation = (content) => {
         }
     }
 }
+/** 
+export const notificationReducer = () => {
+    return {
+
+    }
+}
+*/
 
 export default reducer
