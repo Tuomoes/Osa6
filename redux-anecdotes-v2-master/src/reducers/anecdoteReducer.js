@@ -17,7 +17,8 @@ const asObject = (anecdote) => {
 	}
 }
 
-const initialNotification = 'initial notification. niti-nati-noti.'
+//const initialNotification = 'initial notification. niti-nati-noti.'
+const initialNotification = '';
 const initialState = { anecdotes: anecdotesAtStart.map(asObject), notification: initialNotification }
 
 
@@ -32,12 +33,28 @@ const reducer = (store = initialState, action) => {
         }
 	}
 	if (action.type === 'CREATE') {
-
+        
         return {
             anecdotes: [...store.anecdotes, { content: action.content, id: getId(), votes:0 }],
             notification: store.notification
         }
-	}
+    }
+    if (action.type === 'SET_VOTING_NOTIFICATION') {
+        
+        const newNotification = 'you voted \'' + store.anecdotes.find(x => x.id === action.id).content + '\''
+        return {
+            anecdotes: store.anecdotes,
+            notification: newNotification
+        }
+    }
+
+    if (action.type === 'CLEAR_NOTIFICATION') {
+        
+        return {
+            anecdotes: store.anecdotes,
+            notification: ''
+        }
+    }
 
 	return store
 }
@@ -60,12 +77,25 @@ export const anecdoteCreation = (content) => {
         }
     }
 }
-/** 
-export const notificationReducer = () => {
-    return {
 
+export const votingNotificationSetting = (id) => {
+    console.log('voting notification setting called')
+    {
+        return {
+            type: 'SET_VOTING_NOTIFICATION',
+            id: id
+        }
     }
 }
-*/
+
+export const notificationClearing = () => {
+    console.log('voting notification setting called')
+    {
+        return {
+            type: 'CLEAR_NOTIFICATION'
+        }
+    }
+}
+
 
 export default reducer
