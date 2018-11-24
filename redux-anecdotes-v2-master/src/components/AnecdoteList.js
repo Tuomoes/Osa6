@@ -4,6 +4,7 @@ import {
     votingNotificationSetting,
     notificationClearing
  } from '../reducers/anecdoteReducer'
+ import Filter from './Filter'
 
 class AnecdoteList extends React.Component {
 
@@ -13,26 +14,28 @@ class AnecdoteList extends React.Component {
         setTimeout(() => {
             this.props.store.dispatch(notificationClearing(anecdote.id))
         }, 5000)
-    }
-    
+    } 
+
+
 
     render() {
         const anecdotes = this.props.store.getState().anecdotes
-
+        const filter = this.props.store.getState().filter
 		return (
-			<div>
+		    <div>
 				<h2>Anecdotes</h2>
-				{anecdotes.sort((a, b) => b.votes - a.votes).map(anecdote =>
+                <Filter store={this.props.store} />
+				{anecdotes.filter(x => filter === undefined || x.content.includes(filter)).sort((a, b) => b.votes - a.votes).map(anecdote =>
 					<div key={anecdote.id}>
 						<div>
 							{anecdote.content}
 						</div>
 						<div>
-              has {anecdote.votes}
+                            has {anecdote.votes}
 							<button onClick={() => 
 								this.vote(anecdote)
 							}>
-                vote
+                                vote
 							</button>
 						</div>
 					</div>

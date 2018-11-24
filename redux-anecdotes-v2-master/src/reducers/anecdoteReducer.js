@@ -17,10 +17,7 @@ const asObject = (anecdote) => {
 	}
 }
 
-//const initialNotification = 'initial notification. niti-nati-noti.'
-const initialNotification = '';
-const initialState = { anecdotes: anecdotesAtStart.map(asObject), notification: initialNotification }
-
+const initialState = { anecdotes: anecdotesAtStart.map(asObject) }
 
 const reducer = (store = initialState, action) => {
 	if (action.type==='VOTE') {
@@ -29,14 +26,16 @@ const reducer = (store = initialState, action) => {
 
 		return {
             anecdotes: [...old, { ...voted, votes: voted.votes+1} ], 
-            notification: store.notification
+            notification: store.notification,
+            filter: store.filter
         }
 	}
 	if (action.type === 'CREATE') {
         
         return {
             anecdotes: [...store.anecdotes, { content: action.content, id: getId(), votes:0 }],
-            notification: store.notification
+            notification: store.notification,
+            filter: store.filter
         }
     }
     if (action.type === 'SET_VOTING_NOTIFICATION') {
@@ -44,7 +43,8 @@ const reducer = (store = initialState, action) => {
         const newNotification = 'you voted \'' + store.anecdotes.find(x => x.id === action.id).content + '\''
         return {
             anecdotes: store.anecdotes,
-            notification: newNotification
+            notification: newNotification,
+            filter: store.filter
         }
     }
 
@@ -52,7 +52,16 @@ const reducer = (store = initialState, action) => {
         
         return {
             anecdotes: store.anecdotes,
-            notification: ''
+            notification: '',
+            filter: store.filter
+        }
+    }
+
+    if (action.type === 'SET_FILTER') {
+        return {
+            anecdotes: store.anecdotes,
+            notification: store.notification,
+            filter: action.filterValue
         }
     }
 
@@ -97,5 +106,14 @@ export const notificationClearing = () => {
     }
 }
 
+export const filterSetting = (filterValue) => {
+    console.log('filter setting called')
+    {
+        return {
+            type: 'SET_FILTER',
+            filterValue: filterValue
+        }
+    }
+}
 
 export default reducer
