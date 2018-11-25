@@ -66,9 +66,11 @@ const reducer = (store = initialState, action) => {
         }
     }
 
-    if (action.type === 'INIT_ANECDOTE') {
+    if (action.type === 'INIT_ANECDOTES') {
         return {
-            anecdotes: [...store.anecdotes, action.anecdote ]
+            anecdotes: store.anecdotes.concat(action.anecdotes),
+            notification: store.notification,
+            filter: store.filter
         }
     }
 
@@ -123,12 +125,12 @@ export const filterSetting = (filterValue) => {
     }
 }
 
-export const anecdoteInitialization = (anecdote) => {
+export const anecdotesInitialization = (anecdotes) => {
     console.log('anecdote initialization called')
     {
         return {
-            type: 'INIT_ANECDOTE',
-            anecdote: anecdote
+            type: 'INIT_ANECDOTES',
+            anecdotes: anecdotes
         }
     }
 }
