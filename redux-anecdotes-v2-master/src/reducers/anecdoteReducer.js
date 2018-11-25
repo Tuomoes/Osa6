@@ -17,7 +17,8 @@ const asObject = (anecdote) => {
 	}
 }
 
-const initialState = { anecdotes: anecdotesAtStart.map(asObject) }
+//const initialState = { anecdotes: anecdotesAtStart.map(asObject) }
+const initialState = {anecdotes: []}
 
 const reducer = (store = initialState, action) => {
 	if (action.type==='VOTE') {
@@ -62,6 +63,12 @@ const reducer = (store = initialState, action) => {
             anecdotes: store.anecdotes,
             notification: store.notification,
             filter: action.filterValue
+        }
+    }
+
+    if (action.type === 'INIT_ANECDOTE') {
+        return {
+            anecdotes: [...store.anecdotes, action.anecdote ]
         }
     }
 
@@ -112,6 +119,16 @@ export const filterSetting = (filterValue) => {
         return {
             type: 'SET_FILTER',
             filterValue: filterValue
+        }
+    }
+}
+
+export const anecdoteInitialization = (anecdote) => {
+    console.log('anecdote initialization called')
+    {
+        return {
+            type: 'INIT_ANECDOTE',
+            anecdote: anecdote
         }
     }
 }

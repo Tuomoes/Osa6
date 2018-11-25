@@ -45,8 +45,8 @@ class AnecdoteList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        anecdotesToShow: state.anecdotes.filter(x => state.filter === undefined || x.content.includes(state.filter))
-            .sort((a, b) => b.votes - a.votes)
+        anecdotesToShow: state.anecdotes !== undefined ? state.anecdotes.filter(x => state.filter === undefined || x.content.includes(state.filter))
+            .sort((a, b) => b.votes - a.votes) : []
     }
 }
 
