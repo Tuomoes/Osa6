@@ -12,6 +12,10 @@ const getAll = async () => {
 const createNew = async (content) => {
     const response = await axios.post(url, { content, id: getId(), votes:0 })
     return response.data
-  }
+}
 
-export default { getAll, createNew }
+const update = async (editedAnecdote) => {
+    return axios.put((url + '/' + editedAnecdote.id), editedAnecdote)
+}
+
+export default { getAll, createNew, update }
