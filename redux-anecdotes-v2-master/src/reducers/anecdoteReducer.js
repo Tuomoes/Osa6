@@ -34,7 +34,7 @@ const reducer = (store = initialState, action) => {
 	if (action.type === 'CREATE') {
         
         return {
-            anecdotes: [...store.anecdotes, { content: action.content, id: getId(), votes:0 }],
+            anecdotes: [...store.anecdotes, action.anecdote],
             notification: store.notification,
             filter: store.filter
         }
@@ -86,12 +86,12 @@ export const voting = (id) => {
     }
 }
 
-export const anecdoteCreation = (content) => {
+export const anecdoteCreation = (anecdote) => {
     console.log('anecdoteCreation action creator called')
     {
         return {
             type: 'CREATE',
-            content: content
+            anecdote
         }
     }
 }
