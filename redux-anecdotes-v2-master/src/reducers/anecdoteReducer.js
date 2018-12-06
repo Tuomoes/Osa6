@@ -1,3 +1,4 @@
+import anecdotesService from '../services/anecdotes';
 const anecdotesAtStart = [
 	'If it hurts, do it more often',
 	'Adding manpower to a late software project makes it later!',
@@ -125,13 +126,14 @@ export const filterSetting = (filterValue) => {
     }
 }
 
-export const anecdotesInitialization = (anecdotes) => {
-    console.log('anecdote initialization called')
-    {
-        return {
-            type: 'INIT_ANECDOTES',
-            anecdotes: anecdotes
-        }
+export const anecdotesInitialization = () => {
+    return async (dispatch) => {
+        const anecdotes = await anecdotesService.getAll()
+        console.log('anecdote initialization called')
+        dispatch({
+                type: 'INIT_ANECDOTES',
+                anecdotes: anecdotes
+        })
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { anecdoteCreation } from '../reducers/anecdoteReducer'
 import {connect} from 'react-redux'
-import anecdotesService from '../services/anecdotes';
+import anecdotesService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
   handleSubmit = async (e) => {
