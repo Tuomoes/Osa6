@@ -40,6 +40,16 @@ const reducer = (store = initialState, action) => {
             filter: store.filter
         }
     }
+    if (action.type === 'SET_NOTIFICATION') {
+        
+        const newNotification = action.notification
+        return {
+            anecdotes: store.anecdotes,
+            notification: newNotification,
+            filter: store.filter
+        }
+    }
+
     if (action.type === 'SET_VOTING_NOTIFICATION') {
         
         const newNotification = 'you voted \'' + store.anecdotes.find(x => x.id === action.id).content + '\''
@@ -78,7 +88,6 @@ const reducer = (store = initialState, action) => {
 	return store
 }
 
-
 export const voting = (anecdote) => {
     return async (dispatch) => 
     {
@@ -88,6 +97,23 @@ export const voting = (anecdote) => {
             type: 'VOTE',
             id: anecdote.id
         })
+    }
+}
+
+export const notify = (notification, lengthInSec) => {
+    return async (dispatch) => 
+    {
+        console.log('notification called')
+        dispatch({
+            type: 'SET_NOTIFICATION',
+            notification: notification
+        })
+        setTimeout(() => {
+            console.log('timer out')
+            dispatch({
+                type: 'CLEAR_NOTIFICATION'
+            })
+        }, lengthInSec * 1000)
     }
 }
 
@@ -114,7 +140,7 @@ export const votingNotificationSetting = (id) => {
 }
 
 export const notificationClearing = () => {
-    console.log('voting notification setting called')
+    console.log('voting notification clearing called')
     {
         return {
             type: 'CLEAR_NOTIFICATION'
