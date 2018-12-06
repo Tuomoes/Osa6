@@ -79,21 +79,27 @@ const reducer = (store = initialState, action) => {
 }
 
 
-export const voting = (id) => {
-    console.log('voting action creator called')
-    return {
-        type: 'VOTE',
-        id: id
+export const voting = (anecdote) => {
+    return async (dispatch) => 
+    {
+        console.log('voting action creator called')
+        await anecdotesService.update({content: anecdote.content, id: anecdote.id, votes: anecdote.votes + 1})
+        dispatch({
+            type: 'VOTE',
+            id: anecdote.id
+        })
     }
 }
 
-export const anecdoteCreation = (anecdote) => {
-    console.log('anecdoteCreation action creator called')
+export const anecdoteCreation = (content) => {
+    return async (dispatch) => 
     {
-        return {
+        console.log('anecdoteCreation action creator called')
+        const anecdote = await anecdotesService.createNew(content)
+        dispatch({
             type: 'CREATE',
             anecdote
-        }
+        })
     }
 }
 

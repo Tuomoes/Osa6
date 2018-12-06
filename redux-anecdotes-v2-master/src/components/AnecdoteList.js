@@ -11,8 +11,9 @@ import anecdotesService from '../services/anecdotes'
 class AnecdoteList extends React.Component {
 
     vote = async (anecdote) => {
-        this.props.voting(anecdote.id)
-        await anecdotesService.update({content: anecdote.content, id: anecdote.id, votes: anecdote.votes + 1})
+        //this.props.voting(anecdote.id)
+        //await anecdotesService.update({content: anecdote.content, id: anecdote.id, votes: anecdote.votes + 1})
+        this.props.voting(anecdote)
         this.props.votingNotificationSetting(anecdote.id)
         setTimeout(() => {
             this.props.notificationClearing(anecdote.id)
