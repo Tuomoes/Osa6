@@ -1,21 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-/**
-const Menu = () => (
-  <div>    
-    <a href='#'>anecdotes</a>&nbsp;
-    <a href='#'>create new</a>&nbsp;
-    <a href='#'>about</a>&nbsp;
-  </div>
-)
- */
-
 const Menu = () => (
     <div>    
       <Link to='/'>anecdotes</Link>&nbsp;
-      <Link to='/notes'>create new</Link>&nbsp;
-      <Link to='/users'>about</Link>&nbsp;
+      <Link to='/create'>create new</Link>&nbsp;
+      <Link to='/about'>about</Link>&nbsp;
     </div>
   )
 
@@ -23,9 +13,17 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>&nbsp;</li>)}
     </ul>  
   </div>
+)
+
+const AnecdoteDetails = ({anecdote}) => (
+    <div>
+        <h2>{anecdote.content}</h2>
+        <p>Has {anecdote.votes} votes</p>
+        <p> for more info see <a href={anecdote.info}>{anecdote.info}</a></p>
+    </div>
 )
 
 const About = () => (
@@ -154,8 +152,9 @@ class App extends React.Component {
                 <h1>Software anecdotes</h1>
                 <Menu />
                 <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
-                <Route path="/notes" render={() => <About />} />
-                <Route path="/users" render={() => <CreateNew addNew={this.addNew}/>} />
+                <Route exact path="/anecdotes/:id" render={({match}) => <AnecdoteDetails anecdote={this.state.anecdotes.find(x => x.id === match.params.id)} />} />
+                <Route path="/about" render={() => <About />} />
+                <Route path="/create" render={() => <CreateNew addNew={this.addNew}/>} />
                 <Footer />
             </div>
         </Router>
