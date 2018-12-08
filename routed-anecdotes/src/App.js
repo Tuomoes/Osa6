@@ -1,11 +1,34 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
+
+const notificationStyle = {
+    color: 'blue',
+    fontStyle: 'bold',
+    fontSize: 14,
+    border: '1px dotted green'
+}
+
+const menuStyle = {
+    color: 'red',
+    fontStyle: 'bold',
+    fontSize: 14,
+    padding: '10px',
+    background: 'grey'
+}
+
+const menuActiveStyle = {
+    color: 'blue',
+    fontStyle: 'bold',
+    fontSize: 14,
+    padding: '10px',
+    background: 'red'
+}
 
 const Menu = () => (
-    <div>    
-      <Link to='/'>anecdotes</Link>&nbsp;
-      <Link to='/create'>create new</Link>&nbsp;
-      <Link to='/about'>about</Link>&nbsp;
+    <div style={menuStyle}>    
+      <NavLink activeStyle={menuActiveStyle} exact to='/'>anecdotes</NavLink>&nbsp;
+      <NavLink activeStyle={menuActiveStyle} exact to='/create'>create new</NavLink>&nbsp;
+      <NavLink activeStyle={menuActiveStyle} exact to='/about'>about</NavLink>&nbsp;
     </div>
   )
 
@@ -103,7 +126,7 @@ class CreateNew extends React.Component {
 const Notification = ({notification}) => {
     return(
 
-        <div>
+        <div  style={notificationStyle}>
             {notification}
         </div>
     )
