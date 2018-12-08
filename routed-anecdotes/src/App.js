@@ -1,5 +1,7 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
+/**
 const Menu = () => (
   <div>    
     <a href='#'>anecdotes</a>&nbsp;
@@ -7,6 +9,15 @@ const Menu = () => (
     <a href='#'>about</a>&nbsp;
   </div>
 )
+ */
+
+const Menu = () => (
+    <div>    
+      <Link to='/'>anecdotes</Link>&nbsp;
+      <Link to='/notes'>create new</Link>&nbsp;
+      <Link to='/users'>about</Link>&nbsp;
+    </div>
+  )
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -138,12 +149,16 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Software anecdotes</h1>
-          <Menu />
-          <AnecdoteList anecdotes={this.state.anecdotes} />
-          <About />      
-          <CreateNew addNew={this.addNew}/>
-        <Footer />
+        <Router>
+            <div>
+                <h1>Software anecdotes</h1>
+                <Menu />
+                <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
+                <Route path="/notes" render={() => <About />} />
+                <Route path="/users" render={() => <CreateNew addNew={this.addNew}/>} />
+                <Footer />
+            </div>
+        </Router>
       </div>
     );
   }
